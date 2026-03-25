@@ -3,45 +3,183 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
+import { authApi } from "@/lib/api";
+import { Button } from "@/components/ui/button";
 import {
-  Settings, Globe, CalendarDays, Link2, CalendarCheck, Sparkles,
-  FormInput, Layers, Bell, BarChart3, Webhook, Heart, Scissors,
-  Building2, Check, ArrowRight, Zap
+  Settings,
+  Link2,
+  CalendarCheck,
+  Calendar,
+  FileText,
+  Layers,
+  Bell,
+  BarChart3,
+  Code2,
+  Heart,
+  Scissors,
+  Building2,
+  ArrowRight,
+  Check,
+  Star,
+  Sparkles,
 } from "lucide-react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 const demoAccounts = [
-  { endpoint: "/auth/demo-login", name: "Dr. Marie Dupont", role: "M\u00e9decin", plan: "Free", color: "#8b5cf6", icon: Heart },
-  { endpoint: "/auth/demo-login-pro", name: "Salon Belle & Zen", role: "Coiffure", plan: "Pro", color: "#ec4899", icon: Scissors },
-  { endpoint: "/auth/demo-login-business", name: "Agence ImmoPlus", role: "Immobilier", plan: "Business", color: "#f97316", icon: Building2 },
+  {
+    name: "Dr. Marie Dupont",
+    role: "Medecin",
+    plan: "Free",
+    endpoint: "/auth/demo-login",
+    accent: "from-indigo-500 to-purple-600",
+    accentBg: "bg-indigo-500/10",
+    accentText: "text-indigo-400",
+    accentBorder: "border-indigo-500/30",
+    badgeBg: "bg-indigo-500/20",
+  },
+  {
+    name: "Salon Belle & Zen",
+    role: "Coiffure",
+    plan: "Pro",
+    endpoint: "/auth/demo-login-pro",
+    accent: "from-pink-500 to-rose-600",
+    accentBg: "bg-pink-500/10",
+    accentText: "text-pink-400",
+    accentBorder: "border-pink-500/30",
+    badgeBg: "bg-pink-500/20",
+  },
+  {
+    name: "Agence ImmoPlus",
+    role: "Immobilier",
+    plan: "Business",
+    endpoint: "/auth/demo-login-business",
+    accent: "from-amber-500 to-orange-600",
+    accentBg: "bg-amber-500/10",
+    accentText: "text-amber-400",
+    accentBorder: "border-amber-500/30",
+    badgeBg: "bg-amber-500/20",
+  },
 ];
 
 const steps = [
-  { num: 1, icon: Settings, title: "Configurez votre page", desc: "D\u00e9finissez vos horaires, services et personnalisez votre formulaire." },
-  { num: 2, icon: Link2, title: "Partagez votre lien", desc: "Envoyez votre lien unique \u00e0 vos clients par email, SMS ou r\u00e9seaux sociaux." },
-  { num: 3, icon: CalendarCheck, title: "Recevez des r\u00e9servations", desc: "Vos clients r\u00e9servent en autonomie 24h/24 depuis votre page." },
+  {
+    icon: Settings,
+    title: "Configurez votre page",
+    desc: "Personnalisez vos horaires, services et formulaire en quelques clics.",
+  },
+  {
+    icon: Link2,
+    title: "Partagez votre lien",
+    desc: "Envoyez votre lien unique a vos clients par email, SMS ou reseaux sociaux.",
+  },
+  {
+    icon: CalendarCheck,
+    title: "Recevez des reservations",
+    desc: "Vos clients reservent en autonomie 24h/24. Vous recevez les confirmations.",
+  },
 ];
 
 const features = [
-  { icon: CalendarDays, title: "Calendrier intelligent", desc: "G\u00e9n\u00e9ration automatique des cr\u00e9neaux selon vos horaires et dur\u00e9es." },
-  { icon: FormInput, title: "Formulaire personnalisable", desc: "Choisissez les champs \u00e0 afficher : email, t\u00e9l\u00e9phone, note." },
-  { icon: Layers, title: "Multi-services", desc: "Proposez diff\u00e9rents types de consultations ou prestations." },
-  { icon: Bell, title: "Notifications", desc: "Recevez une alerte \u00e0 chaque nouvelle r\u00e9servation." },
-  { icon: BarChart3, title: "Statistiques", desc: "Suivez vos r\u00e9servations et analysez votre activit\u00e9." },
-  { icon: Webhook, title: "API & Webhooks", desc: "Int\u00e9grez votre agenda \u00e0 vos outils existants." },
+  {
+    icon: Calendar,
+    title: "Calendrier intelligent",
+    desc: "Vue agenda intuitive avec gestion des disponibilites en temps reel.",
+  },
+  {
+    icon: FileText,
+    title: "Formulaire personnalisable",
+    desc: "Adaptez les champs du formulaire de reservation a votre activite.",
+  },
+  {
+    icon: Layers,
+    title: "Multi-services",
+    desc: "Gerez plusieurs types de prestations avec des durees differentes.",
+  },
+  {
+    icon: Bell,
+    title: "Notifications",
+    desc: "Alertes email automatiques pour vous et vos clients a chaque reservation.",
+  },
+  {
+    icon: BarChart3,
+    title: "Statistiques",
+    desc: "Suivez vos reservations, taux de remplissage et revenus en un coup d oeil.",
+  },
+  {
+    icon: Code2,
+    title: "API & Webhooks",
+    desc: "Integrez vos reservations a vos outils existants via notre API REST.",
+  },
 ];
 
 const segments = [
-  { title: "Sant\u00e9", desc: "M\u00e9decins, cliniques, dentistes, kin\u00e9sith\u00e9rapeutes", color: "#8b5cf6" },
-  { title: "Services B2C", desc: "Salons, coachs, conseillers, avocats", color: "#ec4899" },
-  { title: "PME / Agences", desc: "Immobilier, formation, RH, e-commerce", color: "#f97316" },
+  {
+    icon: Heart,
+    title: "Sante",
+    desc: "Medecins, cliniques, dentistes, kinesitherapeutes, psychologues...",
+    accent: "border-indigo-500/30",
+    iconBg: "bg-indigo-500/10",
+    iconColor: "text-indigo-500",
+  },
+  {
+    icon: Scissors,
+    title: "Services B2C",
+    desc: "Salons de coiffure, coachs sportifs, conseillers, estheticiennes...",
+    accent: "border-pink-500/30",
+    iconBg: "bg-pink-500/10",
+    iconColor: "text-pink-500",
+  },
+  {
+    icon: Building2,
+    title: "PME / Agences",
+    desc: "Immobilier, formation professionnelle, RH, cabinets de conseil...",
+    accent: "border-amber-500/30",
+    iconBg: "bg-amber-500/10",
+    iconColor: "text-amber-500",
+  },
 ];
 
 const plans = [
-  { id: "free", name: "Free", price: "0", features: ["1 page de r\u00e9servation", "50 RDV/mois", "Personnalisation basique", "Support communaut\u00e9"], popular: false },
-  { id: "pro", name: "Pro", price: "19", features: ["Pages illimit\u00e9es", "RDV illimit\u00e9s", "Couleurs personnalis\u00e9es", "Support prioritaire", "Statistiques avanc\u00e9es"], popular: true },
-  { id: "business", name: "Business", price: "49", features: ["Tout le plan Pro", "Multi-utilisateurs", "API & Webhooks", "Marque blanche", "Support d\u00e9di\u00e9"], popular: false },
+  {
+    name: "Free",
+    price: "0",
+    desc: "Pour demarrer gratuitement",
+    features: ["1 page de reservation", "50 RDV / mois", "Personnalisation basique", "Notifications email"],
+    accent: "border-gray-200",
+    buttonStyle: "bg-gray-900 hover:bg-gray-800 text-white",
+    popular: false,
+  },
+  {
+    name: "Pro",
+    price: "19",
+    desc: "Pour les professionnels actifs",
+    features: [
+      "Pages illimitees",
+      "RDV illimites",
+      "Couleurs personnalisees",
+      "Support prioritaire",
+      "Statistiques avancees",
+    ],
+    accent: "border-indigo-500",
+    buttonStyle: "bg-indigo-600 hover:bg-indigo-700 text-white",
+    popular: true,
+  },
+  {
+    name: "Business",
+    price: "49",
+    desc: "Pour les equipes et agences",
+    features: [
+      "Tout le plan Pro",
+      "Multi-utilisateurs",
+      "API & Webhooks",
+      "Marque blanche",
+      "Support dedie",
+    ],
+    accent: "border-amber-500",
+    buttonStyle: "bg-gray-900 hover:bg-gray-800 text-white",
+    popular: false,
+  },
 ];
 
 export default function HomePage() {
@@ -50,18 +188,20 @@ export default function HomePage() {
   const [loadingDemo, setLoadingDemo] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isLoading && user) router.push("/dashboard/config");
+    if (!isLoading && user) {
+      router.push("/dashboard/config");
+    }
   }, [user, isLoading, router]);
 
   const handleDemoLogin = async (endpoint: string) => {
-    setLoadingDemo(endpoint);
     try {
-      const res = await fetch(`${API_URL}${endpoint}`, { method: "POST" });
-      const data = await res.json();
-      await login(data.token);
+      setLoadingDemo(endpoint);
+      const res = await fetch(API_URL + endpoint, { method: "POST" });
+      const { token } = await res.json();
+      await login(token);
       router.push("/dashboard/config");
     } catch (err) {
-      console.error(err);
+      console.error("Demo login failed:", err);
     } finally {
       setLoadingDemo(null);
     }
@@ -69,165 +209,199 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* HERO */}
-      <section className="hero-gradient text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-500 rounded-full blur-[120px]" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-500 rounded-full blur-[150px]" />
-        </div>
+      {/* ==================== HERO ==================== */}
+      <section className="hero-gradient relative overflow-hidden">
+        {/* Decorative orbs */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl" />
 
-        <div className="relative max-w-6xl mx-auto px-4 pt-16 pb-20">
-          <nav className="flex items-center justify-between mb-16">
-            <h2 className="text-2xl font-bold">SaaS <span className="text-indigo-400">RDV</span></h2>
-            <a
-              href={`${API_URL}/auth/google`}
-              className="text-sm text-gray-300 hover:text-white transition-colors border border-gray-600 rounded-lg px-4 py-2 hover:border-gray-400"
-            >
-              Connexion Google
-            </a>
-          </nav>
-
-          <div className="text-center max-w-4xl mx-auto mb-16 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 text-sm mb-6 backdrop-blur-sm">
-              <Zap className="h-4 w-4 text-yellow-400" />
-              <span>Gratuit pour commencer &middot; Aucune carte requise</span>
+        <div className="relative max-w-6xl mx-auto px-4 pt-20 pb-24">
+          {/* Badge */}
+          <div className="flex justify-center mb-8 animate-fade-in-up">
+            <div className="glass-card rounded-full px-4 py-2 flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-indigo-400" />
+              <span className="text-sm text-gray-300">Nouveau : Plans Pro et Business disponibles</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Transformez votre agenda en{" "}
-              <span className="gradient-text">machine \u00e0 r\u00e9servations</span>
-            </h1>
-            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              L&apos;outil tout-en-un pour g\u00e9rer vos rendez-vous, automatiser vos
-              r\u00e9servations et d\u00e9velopper votre activit\u00e9.
-            </p>
           </div>
 
+          {/* Title */}
+          <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-6 animate-fade-in-up">
+            Transformez votre agenda en
+            <br />
+            <span className="gradient-text">machine a reservations</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-gray-400 text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
+            L&apos;outil tout-en-un pour gerer vos rendez-vous, automatiser vos reservations et
+            developper votre activite. Gratuit pour commencer.
+          </p>
+
           {/* Demo accounts */}
-          <div className="max-w-3xl mx-auto">
-            <p className="text-center text-sm text-gray-400 mb-4">Essayez avec un compte d\u00e9mo :</p>
-            <div className="grid md:grid-cols-3 gap-4">
-              {demoAccounts.map((demo) => (
-                <button
-                  key={demo.endpoint}
-                  onClick={() => handleDemoLogin(demo.endpoint)}
-                  disabled={!!loadingDemo}
-                  className="glass-card rounded-xl p-5 text-left hover:bg-white/10 transition-all hover:scale-[1.02] group disabled:opacity-50"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: demo.color + "22" }}>
-                      <demo.icon className="h-5 w-5" style={{ color: demo.color }} />
-                    </div>
-                    <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: demo.color + "33", color: demo.color }}>
-                      {demo.plan}
-                    </span>
+          <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-10 animate-fade-in-up">
+            {demoAccounts.map((demo) => (
+              <button
+                key={demo.endpoint}
+                onClick={() => handleDemoLogin(demo.endpoint)}
+                disabled={loadingDemo !== null}
+                className={`glass-card rounded-xl p5 text-left transition-all duration-300 hover:scale-[1.03] hover:border-white/20 group cursor-pointer ${loadingDemo === demo.endpoint ? "opacity-70" : ""}`}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${demo.badgeBg} ${demo.accentText}`}>
+                    {demo.plan}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-gray-500 group-hover:text-white transition-colors" />
+                </div>
+                <h3 className="text-white font-semibold text-lg mb-1">{demo.name}</h3>
+                <p className="text-gray-400 text-sm">{demo.role}</p>
+                {loadingDemo === demo.endpoint && (
+                  <div className="mt-3 h-1 bg-white/10 rounded overflow-hidden">
+                    <div className={`h-full bg-gradient-to-r ${demo.accent} animate-pulse w-full`} />
                   </div>
-                  <h3 className="font-semibold text-white mb-1">{demo.name}</h3>
-                  <p className="text-sm text-gray-400">{demo.role}</p>
-                  {loadingDemo === demo.endpoint && (
-                    <div className="mt-2 text-xs text-indigo-300">Connexion...</div>
-                  )}
-                </button>
-              ))}
-            </div>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Google login */}
+          <div className="text-center animate-fade-in-up">
+            <p className="text-gray-500 text-sm mb-3">ou connectez-vous avec votre compte</p>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                window.location.href = authApi.getGoogleLoginUrl();
+              }}
+              className="bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white"
+            >
+              <svg className="h5 w-5 mr-2" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+                <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+              </svg>
+              Connexion avec Google
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
+      {/* ================= COMMENT CA MARCHE ================= */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Comment \u00e7a marche</h2>
-            <p className="text-gray-600 max-w-xl mx-auto">En 3 \u00e9tapes simples, commencez \u00e0 recevoir des r\u00e9servations.</p>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+            Comment ca marche
+          </h2>
+          <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
+            Trois etapes simples pour digitaliser votre prise de rendez-vous.
+          </p>
           <div className="grid md:grid-cols-3 gap-8">
-            {steps.map((s) => (
-              <div key={s.num} className="text-center group">
-                <div className="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center mx-auto mb-4 group-hover:bg-indigo-100 transition-colors">
-                  <s.icon className="h-7 w-7 text-indigo-600" />
+            {steps.map((step, i) => (
+              <div key={step.title} className="text-center animate-fade-in-up">
+                <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-5 relative">
+                  <step.icon className="h7 w-7 text-indigo-600" />
+                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-indigo-600 text-white text-sm font-bold rounded-full flex items-center justify-center">
+                    {i + 1}
+                  </span>
                 </div>
-                <div className="text-sm font-bold text-indigo-600 mb-2">\u00c9tape {s.num}</div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{s.title}</h3>
-                <p className="text-gray-600 text-sm">{s.desc}</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FEATURES */}
+      {/* ================= FONCTIONNALITES ================= */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Fonctionnalit\u00e9s</h2>
-            <p className="text-gray-600">Tout ce dont vous avez besoin pour g\u00e9rer vos rendez-vous.</p>
-          </div>
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+            Fonctionnalites
+          </h2>
+          <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
+            Tout ce dont vous avez besoin pour gerer vos rendez-vous comme un pro.
+          </p>
           <div className="grid md:grid-cols-3 gap-6">
             {features.map((f) => (
-              <div key={f.title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all">
-                <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-4">
+              <div
+                key={f.title}
+                className="bg-white rounded-xl p-6 border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
                   <f.icon className="h-6 w-6 text-indigo-600" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{f.title}</h3>
-                <p className="text-gray-600 text-sm">{f.desc}</p>
+                <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SEGMENTS */}
+      {/* ================= ILs>NOUS FONT CONFIANCE ================= */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Ils nous font confiance</h2>
-            <p className="text-gray-600">Des professionnels de tous secteurs utilisent SaaS RDV.</p>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+            Ils nous font confiance
+          </h2>
+          <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
+            Des professionnels de tous secteurs utilisent SaaS RDV au quotidien.
+          </p>
           <div className="grid md:grid-cols-3 gap-6">
             {segments.map((seg) => (
-              <div key={seg.title} className="rounded-2xl p-6 border-2 border-gray-100 hover:border-opacity-50 transition-colors" style={{ borderColor: seg.color + "44" }}>
-                <div className="w-3 h-3 rounded-full mb-4" style={{ backgroundColor: seg.color }} />
+              <div
+                key={seg.title}
+                className={`rounded-xl p-6 border-2 ${seg.accent} bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
+              >
+                <div className={`w-12 h-12 ${seg.iconBg} rounded-xl flex items-center justify-center mb-4`}>
+                  <seg.icon className={`h-6 w-6 ${seg.iconColor}`} />
+                </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{seg.title}</h3>
-                <p className="text-gray-600 text-sm">{seg.desc}</p>
+                <p className="text-gray-500 text-sm leading-relaxed">{seg.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* PRICING */}
-      <section className="py-20 bg-gray-50" id="pricing">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Tarifs simples et transparents</h2>
-            <p className="text-gray-600">Commencez gratuitement, \u00e9voluez selon vos besoins.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
+      {/* ================= PRICING ================= */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+            Tarifs simples et transparents
+          </h2>
+          <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
+            Commencez gratuitement, evoluez selon vos besoins. Sans engagement.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6 items-start">
             {plans.map((plan) => (
-              <div key={plan.id} className={`bg-white rounded-2xl p-8 shadow-sm border-2 transition-all hover:shadow-lg relative ${plan.popular ? "border-indigo-500 scale-105" : "border-gray-100"}`}>
+              <div
+                key={plan.name}
+                className={`relative bg-white rounded-2xl p-8 border-2 ${plan.accent} transition-all duration-300 hover:shadow-lg ${plan.popular ? "md:-mt-4 md:mb-4 shadow-lg" : ""}`}
+              >
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold px-4 py-1 rounded-full">
-                    Populaire
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span className="bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+                      <Star className="h-3 w-3" /> Populaire
+                    </span>
                   </div>
                 )}
-                <h3 className="text-lg font-semibold text-gray-900">{plan.name}</h3>
-                <div className="mt-4 mb-6">
-                  <span className="text-4xl font-bold text-gray-900">{plan.price}\u20ac</span>
-                  <span className="text-gray-500 text-sm">/mois</span>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{plan.name}</h3>
+                <p className="text-gray-500 text-sm mb-6">{plan.desc}</p>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-gray-900">{plan.price}&euro;</span>
+                  <span className="text-gray-500 text-sm"> / mois</span>
                 </div>
                 <ul className="space-y-3 mb-8">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-gray-600">
-                      <Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                      {f}
+                  {plan.features.map((feat) => (
+                    <li key={feat} className="flex items-center gap-2 text-sm text-gray-600">
+                      <Check className="h-4 w-4 text-indigo-600 shrink-0" />
+                      {feat}
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={() => handleDemoLogin(demoAccounts[plans.indexOf(plan)]?.endpoint || "/auth/demo-login")}
-                  className={`w-full py-3 rounded-xl font-semibold text-sm transition-all ${plan.popular ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:opacity-90" : "bg-gray-100 text-gray-900 hover:bg-gray-200"}`}
-                >
-                  Essayer {plan.name}
+                <button className={`w-full py-3 px-4 rounded-lg font-semibold text-sm transition-colors ${plan.buttonStyle}`}>
+                  {plan.price === "0" ? "Commencer gratuitement" : "Essayer gratuitement"}
                 </button>
               </div>
             ))}
@@ -235,23 +409,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="hero-gradient py-20 text-white text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-4">Pr\u00eat \u00e0 simplifier vos r\u00e9servations ?</h2>
-          <p className="text-gray-300 mb-8">Rejoignez des milliers de professionnels qui gagnent du temps chaque jour.</p>
-          <button
-            onClick={() => handleDemoLogin("/auth/demo-login")}
-            className="inline-flex items-center gap-2 bg-white text-gray-900 font-semibold px-8 py-4 rounded-xl hover:bg-gray-100 transition-colors text-lg"
-          >
-            Commencer gratuitement <ArrowRight className="h-5 w-5" />
-          </button>
+      {/* ================= CTAEND ================= */}
+      <section className="py-20 hero-gradient relative overflow-hidden">
+        <div className="absolute top-10 right-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl" />
+        <div className="relative max-w-3xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Pret a simplifier vos reservations ?
+          </h2>
+          <p className="text-gray-400 mb-10 text-lg">
+            Rejoignez des centaines de professionnels qui gagnent du temps chaque jour.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {demoAccounts.map((demo) => (
+              <button
+                key={demo.endpoint}
+                onClick={() => handleDemoLogin(demo.endpoint)}
+                disabled={loadingDemo !== null}
+                className="glass-card rounded-xl px-6 py-3 text-white font-semibold transition-all duration-300 hover:scale-105 hover:border-white/20"
+              >
+                {demo.name}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-gray-900 text-gray-400 py-8 text-center text-sm">
-        <p>&copy; 2026 SaaS RDV. Tous droits r\u00e9serv\u00e9s.</p>
+      {/* ================= FOOTER ================= */}
+      <footer className="bg-gray-900 py-8">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <p className="text-gray-500 text-sm">
+            &copy; {new Date().getFullYear()} SaaS RDV. Tous droits reserves.
+          </p>
+        </div>
       </footer>
     </div>
   );
