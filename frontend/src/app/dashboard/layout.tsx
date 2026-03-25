@@ -37,7 +37,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, []);
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center bg-slate-950"><Spinner size="lg" /></div>;
+    return <div className="min-h-screen flex items-center justify-center bg-slate-900"><Spinner size="lg" /></div>;
   }
   if (!user) return null;
 
@@ -94,7 +94,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               href={`/book/${slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:bg-white/5 hover:text-gray-300 transition-all mt-4"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:bg-white/5 hover:text-white transition-all mt-4"
             >
               <ExternalLink className="h-5 w-5" />
               Page publique

@@ -338,7 +338,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ================= ILs>NOUS FONT CONFIANCE ================= */}
+      {/* ================= ILS NOUS FONT CONFIANCE ================= */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">

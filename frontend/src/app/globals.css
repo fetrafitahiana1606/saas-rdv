@@ -10,7 +10,6 @@
 /* Smooth scrolling */
 html { scroll-behavior: smooth; }
 
-body { font-family: 'Inter', system-ui, sans-serif; }
 
 /* Gradient text utility */
 .gradient-text {

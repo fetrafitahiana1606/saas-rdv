@@ -136,10 +136,10 @@ export default function ConfigPage() {
                 </button>
                 <span className="text-sm font-medium text-gray-700 w-24">{day.label}</span>
                 <input type="time" value={field.value?.start ?? "09:00"} onChange={(e) => field.onChange({ ...field.value, start: e.target.value })}
-                  disabled={!field.value?.enabled} className="rounded-lg border border-gray-300 px-2 py-1.5 text-sm disabled:opacity-30" />
+                  disabled={!field.value?.enabled} className="rounded-xl border border-gray-300 px-2 py-1.5 text-sm disabled:opacity-30" />
                 <span className="text-gray-400">—</span>
                 <input type="time" value={field.value?.end ?? "18:00"} onChange={(e) => field.onChange({ ...field.value, end: e.target.value })}
-                  disabled={!field.value?.enabled} className="rounded-lg border border-gray-300 px-2 py-1.5 text-sm disabled:opacity-30" />
+                  disabled={!field.value?.enabled} className="rounded-xl border border-gray-300 px-2 py-1.5 text-sm disabled:opacity-30" />
               </div>
             )} />
           ))}</div>
