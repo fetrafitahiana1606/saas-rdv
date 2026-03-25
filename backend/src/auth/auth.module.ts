@@ -8,10 +8,11 @@ import { GoogleStrategy } from "./strategies/google.strategy.js";
 import { JwtStrategy } from "./strategies/jwt.strategy.js";
 import { User } from "../entities/user.entity.js";
 import { Business } from "../entities/business.entity.js";
+import { Appointment } from "../entities/appointment.entity.js";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Business]),
+    TypeOrmModule.forFeature([User, Business, Appointment]),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
