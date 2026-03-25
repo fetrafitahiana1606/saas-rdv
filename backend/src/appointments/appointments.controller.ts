@@ -33,7 +33,8 @@ export class AppointmentsController {
   }
 
   @Get("availability/:slug")
-  getAvailability(@Param("slug") slug: string, @Query("date") date: string) {
-    return this.appointmentsService.getAvailability(slug, date);
+  async getAvailability(@Param("slug") slug: string, @Query("date") date: string) {
+    const availability = await this.appointmentsService.getAvailability(slug, date);
+    return { slots: availability.map((s) => s.startTime) };
   }
 }
