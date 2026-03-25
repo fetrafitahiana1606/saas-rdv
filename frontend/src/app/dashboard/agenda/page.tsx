@@ -64,7 +64,7 @@ export default function AgendaPage() {
         <div className="bg-white rounded-2xl p-16 shadow-sm border border-gray-100 text-center">
           <CalendarDays className="h-16 w-16 text-gray-300 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucun rendez-vous</h3>
-          <p className="text-gray-500 text-sm">Partagez votre lien de r\u00e9servation pour recevoir vos premiers rendez-vous.</p>
+          <p className="text-gray-500 text-sm">Partagez votre lien de réservation pour recevoir vos premiers rendez-vous.</p>
         </div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -75,7 +75,7 @@ export default function AgendaPage() {
                 <th className="text-left px-5 py-3 font-medium text-gray-500">Heure</th>
                 <th className="text-left px-5 py-3 font-medium text-gray-500">Client</th>
                 <th className="text-left px-5 py-3 font-medium text-gray-500">Email</th>
-                <th className="text-left px-5 py-3 font-medium text-gray-500">T\u00e9l\u00e9phone</th>
+                <th className="text-left px-5 py-3 font-medium text-gray-500">Téléphone</th>
                 <th className="text-left px-5 py-3 font-medium text-gray-500">Note</th>
                 <th className="text-left px-5 py-3 font-medium text-gray-500"></th>
               </tr>
@@ -109,7 +109,7 @@ export default function AgendaPage() {
       )}
 
       <Modal isOpen={!!deleteTarget} onClose={() => setDeleteTarget(null)} title="Supprimer ce rendez-vous ?">
-        <p className="text-sm text-gray-600 mb-6">Le rendez-vous de <strong>{deleteTarget?.clientName}</strong> sera d\u00e9finitivement supprim\u00e9.</p>
+        <p className="text-sm text-gray-600 mb-6">Le rendez-vous de <strong>{deleteTarget?.clientName}</strong> sera définitivement supprimé.</p>
         <div className="flex gap-3 justify-end">
           <Button variant="secondary" onClick={() => setDeleteTarget(null)}>Annuler</Button>
           <Button variant="danger" onClick={handleDelete} loading={deleting}>Supprimer</Button>

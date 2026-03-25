@@ -55,7 +55,7 @@ export default function ConfigPage() {
 
   const onSubmit = async (data: FormValues) => {
     setSaving(true); setMessage(null);
-    try { await businessApi.updateMyBusiness(data); setMessage({ type: "success", text: "Configuration enregistr\u00e9e !" }); }
+    try { await businessApi.updateMyBusiness(data); setMessage({ type: "success", text: "Configuration enregistrée !" }); }
     catch (err: any) { setMessage({ type: "error", text: err.message || "Erreur." }); }
     finally { setSaving(false); }
   };
@@ -99,7 +99,7 @@ export default function ConfigPage() {
         </section>
 
         <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Lien de r\u00e9servation</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Lien de réservation</h2>
           <Input label="Slug" {...register("slug")} placeholder="mon-entreprise" />
           <div className="mt-3 flex items-center gap-2">
             <code className="text-sm bg-gray-100 px-3 py-2 rounded-lg text-indigo-600 flex-1 truncate">
@@ -114,11 +114,11 @@ export default function ConfigPage() {
               </a>
             )}
           </div>
-          {copied && <p className="text-xs text-green-600 mt-1">Lien copi\u00e9 !</p>}
+          {copied && <p className="text-xs text-green-600 mt-1">Lien copié !</p>}
         </section>
 
         <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Dur\u00e9e des cr\u00e9neaux</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Durée des créneaux</h2>
           <select {...register("slotDuration", { valueAsNumber: true })}
             className="rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
             {DURATIONS.map((d) => <option key={d} value={d}>{d} minutes</option>)}
@@ -137,7 +137,7 @@ export default function ConfigPage() {
                 <span className="text-sm font-medium text-gray-700 w-24">{day.label}</span>
                 <input type="time" value={field.value?.start ?? "09:00"} onChange={(e) => field.onChange({ ...field.value, start: e.target.value })}
                   disabled={!field.value?.enabled} className="rounded-lg border border-gray-300 px-2 py-1.5 text-sm disabled:opacity-30" />
-                <span className="text-gray-400">\u2014</span>
+                <span className="text-gray-400">—</span>
                 <input type="time" value={field.value?.end ?? "18:00"} onChange={(e) => field.onChange({ ...field.value, end: e.target.value })}
                   disabled={!field.value?.enabled} className="rounded-lg border border-gray-300 px-2 py-1.5 text-sm disabled:opacity-30" />
               </div>
@@ -155,7 +155,7 @@ export default function ConfigPage() {
                   className={`w-11 h-6 rounded-full transition-colors relative ${field.value ? "bg-indigo-600" : "bg-gray-300"}`}>
                   <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${field.value ? "translate-x-5" : ""}`} />
                 </button>
-                <span className="text-sm text-gray-700">{f === "phone" ? "T\u00e9l\u00e9phone" : f === "note" ? "Note" : "Email"}</span>
+                <span className="text-sm text-gray-700">{f === "phone" ? "Téléphone" : f === "note" ? "Note" : "Email"}</span>
               </label>
             )} />
           ))}</div>

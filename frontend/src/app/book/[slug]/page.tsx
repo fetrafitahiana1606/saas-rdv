@@ -17,7 +17,7 @@ import { ArrowLeft, CalendarDays, Clock, CheckCircle2, User, Mail, Phone, Messag
 
 const DAY_KEYS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
 
-const stepLabels = ["Date", "Cr\u00e9neau", "Infos", "Confirm\u00e9"];
+const stepLabels = ["Date", "Créneau", "Infos", "Confirmé"];
 
 export default function BookingPage() {
   const params = useParams();
@@ -57,14 +57,14 @@ export default function BookingPage() {
     if (!selectedDate || !slug) return;
     setSlotsLoading(true); setSelectedSlot(null);
     appointmentsApi.getAvailability(slug, format(selectedDate, "yyyy-MM-dd"))
-      .then((res) => setSlots(res.slots)).catch(() => setSlots([]))
+      .then((res) => setSlots(res.slots || [])).catch(() => setSlots([]))
       .finally(() => setSlotsLoading(false));
   }, [selectedDate, slug]);
 
   const formSchema = useMemo(() => {
-    const shape: Record<string, z.ZodTypeAny> = { clientName: z.string().min(2, "Nom requis (min 2 caract\u00e8res).") };
+    const shape: Record<string, z.ZodTypeAny> = { clientName: z.string().min(2, "Nom requis (min 2 caractères).") };
     if (business?.formFields?.email) shape.clientEmail = z.string().email("Email invalide.");
-    if (business?.formFields?.phone) shape.clientPhone = z.string().min(8, "T\u00e9l\u00e9phone requis.");
+    if (business?.formFields?.phone) shape.clientPhone = z.string().min(8, "Téléphone requis.");
     if (business?.formFields?.note) shape.note = z.string().optional();
     return z.object(shape);
   }, [business?.formFields]);
@@ -95,7 +95,7 @@ export default function BookingPage() {
           <CalendarDays className="h-8 w-8 text-red-400" />
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Page introuvable</h1>
-        <p className="text-gray-500">{error || "Ce lien de r\u00e9servation n'existe pas."}</p>
+        <p className="text-gray-500">{error || "Ce lien de réservation n'existe pas."}</p>
       </div>
     </div>
   );
@@ -159,11 +159,11 @@ export default function BookingPage() {
             </button>
             <div className="flex items-center gap-2 mb-2">
               <Clock className="h-5 w-5" style={{ color: accent }} />
-              <h2 className="text-lg font-semibold text-gray-900">Choisir un cr\u00e9neau</h2>
+              <h2 className="text-lg font-semibold text-gray-900">Choisir un créneau</h2>
             </div>
             <p className="text-sm text-gray-500 mb-4">{selectedDate && format(selectedDate, "EEEE d MMMM yyyy", { locale: fr })}</p>
             {slotsLoading ? <div className="py-8 flex justify-center"><Spinner /></div> : slots.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">Aucun cr\u00e9neau disponible.</p>
+              <p className="text-gray-500 text-center py-8">Aucun créneau disponible.</p>
             ) : (
               <div className="grid grid-cols-4 gap-2">
                 {slots.map((slot) => (
@@ -187,17 +187,17 @@ export default function BookingPage() {
             <div className="flex items-center gap-2 p-3 rounded-xl mb-6" style={{ backgroundColor: accent + "10" }}>
               <CalendarDays className="h-4 w-4" style={{ color: accent }} />
               <span className="text-sm font-medium" style={{ color: accent }}>
-                {selectedDate && format(selectedDate, "EEEE d MMMM", { locale: fr })} \u00e0 {selectedSlot}
+                {selectedDate && format(selectedDate, "EEEE d MMMM", { locale: fr })} à {selectedSlot}
               </span>
             </div>
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Vos informations</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <Input label="Nom *" {...register("clientName")} error={(errors as any).clientName?.message} placeholder="Votre nom complet" />
               {business.formFields?.email && <Input label="Email *" type="email" {...register("clientEmail")} error={(errors as any).clientEmail?.message} placeholder="email@exemple.com" />}
-              {business.formFields?.phone && <Input label="T\u00e9l\u00e9phone *" type="tel" {...register("clientPhone")} error={(errors as any).clientPhone?.message} placeholder="+33 6 12 34 56 78" />}
+              {business.formFields?.phone && <Input label="Téléphone *" type="tel" {...register("clientPhone")} error={(errors as any).clientPhone?.message} placeholder="+33 6 12 34 56 78" />}
               {business.formFields?.note && (
                 <div><label className="block text-sm font-medium text-gray-700 mb-1">Note</label>
-                  <textarea {...register("note")} rows={3} className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" placeholder="Informations compl\u00e9mentaires..." /></div>
+                  <textarea {...register("note")} rows={3} className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" placeholder="Informations complémentaires..." /></div>
               )}
               <button type="submit" disabled={submitting}
                 className="w-full py-3 rounded-xl font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
@@ -214,7 +214,7 @@ export default function BookingPage() {
             <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: accent + "15" }}>
               <CheckCircle2 className="h-10 w-10" style={{ color: accent }} />
             </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Rendez-vous confirm\u00e9 !</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Rendez-vous confirmé !</h2>
             <div className="text-sm text-gray-600 space-y-1 mb-8 bg-gray-50 rounded-xl p-4">
               <p className="font-semibold text-gray-900">{business.businessName}</p>
               <p>{selectedDate && format(selectedDate, "EEEE d MMMM yyyy", { locale: fr })}</p>

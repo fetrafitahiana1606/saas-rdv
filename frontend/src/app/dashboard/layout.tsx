@@ -119,7 +119,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </div>
           <button onClick={logout} className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors w-full">
-            <LogOut className="h-4 w-4" /> D\u00e9connexion
+            <LogOut className="h-4 w-4" /> Déconnexion
           </button>
         </div>
       </aside>

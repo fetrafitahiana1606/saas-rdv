@@ -29,7 +29,7 @@ const API_URL = "/api";
 const demoAccounts = [
   {
     name: "Dr. Marie Dupont",
-    role: "Medecin",
+    role: "Médecin",
     plan: "Free",
     endpoint: "/auth/demo-login",
     accent: "from-indigo-500 to-purple-600",
@@ -71,12 +71,12 @@ const steps = [
   {
     icon: Link2,
     title: "Partagez votre lien",
-    desc: "Envoyez votre lien unique a vos clients par email, SMS ou reseaux sociaux.",
+    desc: "Envoyez votre lien unique à vos clients par email, SMS ou réseaux sociaux.",
   },
   {
     icon: CalendarCheck,
-    title: "Recevez des reservations",
-    desc: "Vos clients reservent en autonomie 24h/24. Vous recevez les confirmations.",
+    title: "Recevez des réservations",
+    desc: "Vos clients réservent en autonomie 24h/24. Vous recevez les confirmations.",
   },
 ];
 
@@ -84,40 +84,40 @@ const features = [
   {
     icon: Calendar,
     title: "Calendrier intelligent",
-    desc: "Vue agenda intuitive avec gestion des disponibilites en temps reel.",
+    desc: "Vue agenda intuitive avec gestion des disponibilités en temps réel.",
   },
   {
     icon: FileText,
     title: "Formulaire personnalisable",
-    desc: "Adaptez les champs du formulaire de reservation a votre activite.",
+    desc: "Adaptez les champs du formulaire de réservation à votre activité.",
   },
   {
     icon: Layers,
     title: "Multi-services",
-    desc: "Gerez plusieurs types de prestations avec des durees differentes.",
+    desc: "Gérez plusieurs types de prestations avec des durées différentes.",
   },
   {
     icon: Bell,
     title: "Notifications",
-    desc: "Alertes email automatiques pour vous et vos clients a chaque reservation.",
+    desc: "Alertes email automatiques pour vous et vos clients à chaque réservation.",
   },
   {
     icon: BarChart3,
     title: "Statistiques",
-    desc: "Suivez vos reservations, taux de remplissage et revenus en un coup d oeil.",
+    desc: "Suivez vos réservations, taux de remplissage et revenus en un coup d'œil.",
   },
   {
     icon: Code2,
     title: "API & Webhooks",
-    desc: "Integrez vos reservations a vos outils existants via notre API REST.",
+    desc: "Intégrez vos réservations à vos outils existants via notre API REST.",
   },
 ];
 
 const segments = [
   {
     icon: Heart,
-    title: "Sante",
-    desc: "Medecins, cliniques, dentistes, kinesitherapeutes, psychologues...",
+    title: "Santé",
+    desc: "Médecins, cliniques, dentistes, kinésithérapeutes, psychologues...",
     accent: "border-indigo-500/30",
     iconBg: "bg-indigo-500/10",
     iconColor: "text-indigo-500",
@@ -125,7 +125,7 @@ const segments = [
   {
     icon: Scissors,
     title: "Services B2C",
-    desc: "Salons de coiffure, coachs sportifs, conseillers, estheticiennes...",
+    desc: "Salons de coiffure, coachs sportifs, conseillers, esthéticiennes...",
     accent: "border-pink-500/30",
     iconBg: "bg-pink-500/10",
     iconColor: "text-pink-500",
@@ -144,8 +144,8 @@ const plans = [
   {
     name: "Free",
     price: "0",
-    desc: "Pour demarrer gratuitement",
-    features: ["1 page de reservation", "50 RDV / mois", "Personnalisation basique", "Notifications email"],
+    desc: "Pour démarrer gratuitement",
+    features: ["1 page de réservation", "50 RDV / mois", "Personnalisation basique", "Notifications email"],
     accent: "border-gray-200",
     buttonStyle: "bg-gray-900 hover:bg-gray-800 text-white",
     popular: false,
@@ -155,11 +155,11 @@ const plans = [
     price: "19",
     desc: "Pour les professionnels actifs",
     features: [
-      "Pages illimitees",
-      "RDV illimites",
-      "Couleurs personnalisees",
+      "Pages illimitées",
+      "RDV illimités",
+      "Couleurs personnalisées",
       "Support prioritaire",
-      "Statistiques avancees",
+      "Statistiques avancées",
     ],
     accent: "border-indigo-500",
     buttonStyle: "bg-indigo-600 hover:bg-indigo-700 text-white",
@@ -168,13 +168,13 @@ const plans = [
   {
     name: "Business",
     price: "49",
-    desc: "Pour les equipes et agences",
+    desc: "Pour les équipes et agences",
     features: [
       "Tout le plan Pro",
       "Multi-utilisateurs",
       "API & Webhooks",
       "Marque blanche",
-      "Support dedie",
+      "Support dédié",
     ],
     accent: "border-amber-500",
     buttonStyle: "bg-gray-900 hover:bg-gray-800 text-white",
@@ -228,13 +228,13 @@ export default function HomePage() {
           <h1 className="text-4xl md:text-6xl font-bold text-white text-center mb-6 animate-fade-in-up">
             Transformez votre agenda en
             <br />
-            <span className="gradient-text">machine a reservations</span>
+            <span className="gradient-text">machine à réservations</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-gray-400 text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
-            L&apos;outil tout-en-un pour gerer vos rendez-vous, automatiser vos reservations et
-            developper votre activite. Gratuit pour commencer.
+            L&apos;outil tout-en-un pour gérer vos rendez-vous, automatiser vos réservations et
+            développer votre activité. Gratuit pour commencer.
           </p>
 
           {/* Demo accounts */}
@@ -244,7 +244,7 @@ export default function HomePage() {
                 key={demo.endpoint}
                 onClick={() => handleDemoLogin(demo.endpoint)}
                 disabled={loadingDemo !== null}
-                className={`glass-card rounded-xl p5 text-left transition-all duration-300 hover:scale-[1.03] hover:border-white/20 group cursor-pointer ${loadingDemo === demo.endpoint ? "opacity-70" : ""}`}
+                className={`glass-card rounded-xl p-5 text-left transition-all duration-300 hover:scale-[1.03] hover:border-white/20 group cursor-pointer ${loadingDemo === demo.endpoint ? "opacity-70" : ""}`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${demo.badgeBg} ${demo.accentText}`}>
@@ -274,7 +274,7 @@ export default function HomePage() {
               }}
               className="bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white"
             >
-              <svg className="h5 w-5 mr-2" viewBox="0 0 24 24">
+              <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
                 <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
                 <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
@@ -290,16 +290,16 @@ export default function HomePage() {
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
-            Comment ca marche
+            Comment ça marche
           </h2>
           <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
-            Trois etapes simples pour digitaliser votre prise de rendez-vous.
+            Trois étapes simples pour digitaliser votre prise de rendez-vous.
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             {steps.map((step, i) => (
               <div key={step.title} className="text-center animate-fade-in-up">
                 <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-5 relative">
-                  <step.icon className="h7 w-7 text-indigo-600" />
+                  <step.icon className="h-7 w-7 text-indigo-600" />
                   <span className="absolute -top-2 -right-2 w-7 h-7 bg-indigo-600 text-white text-sm font-bold rounded-full flex items-center justify-center">
                     {i + 1}
                   </span>
@@ -316,10 +316,10 @@ export default function HomePage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
-            Fonctionnalites
+            Fonctionnalités
           </h2>
           <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
-            Tout ce dont vous avez besoin pour gerer vos rendez-vous comme un pro.
+            Tout ce dont vous avez besoin pour gérer vos rendez-vous comme un pro.
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {features.map((f) => (
@@ -371,7 +371,7 @@ export default function HomePage() {
             Tarifs simples et transparents
           </h2>
           <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
-            Commencez gratuitement, evoluez selon vos besoins. Sans engagement.
+            Commencez gratuitement, évoluez selon vos besoins. Sans engagement.
           </p>
           <div className="grid md:grid-cols-3 gap-6 items-start">
             {plans.map((plan) => (
@@ -414,7 +414,7 @@ export default function HomePage() {
         <div className="absolute top-10 right-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl" />
         <div className="relative max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Pret a simplifier vos reservations ?
+            Prêt à simplifier vos réservations ?
           </h2>
           <p className="text-gray-400 mb-10 text-lg">
             Rejoignez des centaines de professionnels qui gagnent du temps chaque jour.
@@ -438,7 +438,7 @@ export default function HomePage() {
       <footer className="bg-gray-900 py-8">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p className="text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} SaaS RDV. Tous droits reserves.
+            &copy; {new Date().getFullYear()} SaaS RDV. Tous droits réservés.
           </p>
         </div>
       </footer>

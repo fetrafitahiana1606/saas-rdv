@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 import { Check, Sparkles } from "lucide-react";
 
 const plans = [
-  { id: "free" as const, name: "Free", price: "0", features: ["1 page de r\u00e9servation", "50 RDV/mois", "Personnalisation basique"], popular: false },
-  { id: "pro" as const, name: "Pro", price: "19", features: ["Pages illimit\u00e9es", "RDV illimit\u00e9s", "Couleurs personnalis\u00e9es", "Support prioritaire", "Statistiques avanc\u00e9es"], popular: true },
-  { id: "business" as const, name: "Business", price: "49", features: ["Tout le plan Pro", "Multi-utilisateurs", "API & Webhooks", "Marque blanche", "Support d\u00e9di\u00e9"], popular: false },
+  { id: "free" as const, name: "Free", price: "0", features: ["1 page de réservation", "50 RDV/mois", "Personnalisation basique"], popular: false },
+  { id: "pro" as const, name: "Pro", price: "19", features: ["Pages illimitées", "RDV illimités", "Couleurs personnalisées", "Support prioritaire", "Statistiques avancées"], popular: true },
+  { id: "business" as const, name: "Business", price: "49", features: ["Tout le plan Pro", "Multi-utilisateurs", "API & Webhooks", "Marque blanche", "Support dédié"], popular: false },
 ];
 
 export default function BillingPage() {
@@ -49,7 +49,7 @@ export default function BillingPage() {
               {isCurrent && <div className="absolute -top-3 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">Actuel</div>}
               <h3 className="text-lg font-semibold text-gray-900">{plan.name}</h3>
               <div className="mt-4 mb-6">
-                <span className="text-4xl font-bold text-gray-900">{plan.price}\u20ac</span>
+                <span className="text-4xl font-bold text-gray-900">{plan.price}€</span>
                 <span className="text-gray-500 text-sm">/mois</span>
               </div>
               <ul className="space-y-3 mb-8">
@@ -76,8 +76,8 @@ export default function BillingPage() {
 
       {user?.plan !== "free" && (
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">G\u00e9rer mon abonnement</h3>
-          <p className="text-sm text-gray-600 mb-4">Modifier votre moyen de paiement, t\u00e9l\u00e9charger vos factures ou annuler.</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Gérer mon abonnement</h3>
+          <p className="text-sm text-gray-600 mb-4">Modifier votre moyen de paiement, télécharger vos factures ou annuler.</p>
           <button onClick={handleManage} disabled={!!loadingAction}
             className="px-6 py-2.5 rounded-xl text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors disabled:opacity-50">
             {loadingAction === "portal" ? "Redirection..." : "Ouvrir le portail Stripe"}
