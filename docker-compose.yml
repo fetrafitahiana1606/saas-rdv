@@ -26,10 +26,22 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    env_file:
-      - ./backend/.env
     environment:
       DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: saasrdv
+      DATABASE_PASSWORD: saasrdv_dev
+      DATABASE_NAME: saasrdv
+      GOOGLE_CLIENT_ID: your-google-client-id
+      GOOGLE_CLIENT_SECRET: your-google-client-secret
+      GOOGLE_CALLBACK_URL: http://localhost:3001/auth/google/callback
+      JWT_SECRET: super-secret-jwt-key-change-in-production
+      STRIPE_SECRET_KEY: sk_test_your-stripe-secret-key
+      STRIPE_WEBHOOK_SECRET: whsec_your-webhook-secret
+      STRIPE_PRO_PRICE_ID: price_pro_placeholder
+      STRIPE_BUSINESS_PRICE_ID: price_business_placeholder
+      FRONTEND_URL: http://localhost:3000
+      PORT: 3001
     volumes:
       - ./backend:/app
       - /app/node_modules
