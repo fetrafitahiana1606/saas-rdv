@@ -44,13 +44,13 @@ export class AuthController {
   private async findOrCreateDemo(email: string, name: string, plan: UserPlan, bizConfig: any) {
     let user = await this.userRepo.findOne({ where: { email } });
     if (!user) {
-      user = this.userRepo.create({ email, name, plan, googleId: "demo-" + email });
-      user = await this.userRepo.save(user);
+      const newUser = this.userRepo.create({ email, name, plan, googleId: "demo-" + email });
+      user = await this.userRepo.save(newUser);
     }
     let biz = await this.businessRepo.findOne({ where: { userId: user.id } });
     if (!biz) {
-      biz = this.businessRepo.create({ userId: user.id, ...bizConfig });
-      biz = await this.businessRepo.save(biz);
+      const newBiz = this.businessRepo.create({ userId: user.id, ...bizConfig } as Partial<Business>);
+      biz = await this.businessRepo.save(newBiz as Business);
     }
     const payload = { sub: user.id, email: user.email };
     const token = this.jwtService.sign(payload);
