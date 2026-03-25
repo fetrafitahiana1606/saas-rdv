@@ -17,11 +17,11 @@ async function apiFetch<T>(path: string, options: FetchOptions = {}): Promise<T>
   };
   if (auth) {
     const token = getToken();
-    if (token) headers["Authorization"] = \;
+    if (token) headers["Authorization"] = `Bearer ${token}`;
   }
-  const res = await fetch(\, { ...fetchOptions, headers });
+  const res = await fetch(`${API_URL}${path}`, { ...fetchOptions, headers });
   if (!res.ok) {
-    let msg = \;
+    let msg = `HTTP ${res.status}`;
     try { const e = await res.json(); msg = e.message || e.error || msg; } catch {}
     throw new Error(msg);
   }
@@ -31,7 +31,7 @@ async function apiFetch<T>(path: string, options: FetchOptions = {}): Promise<T>
 }
 
 export const authApi = {
-  getGoogleLoginUrl: () => \,
+  getGoogleLoginUrl: () => `${API_URL}/auth/google`,
   getMe: () => apiFetch<User>("/auth/me", { auth: true }),
 };
 
@@ -39,7 +39,7 @@ export const businessApi = {
   getMyBusiness: () => apiFetch<BusinessConfig>("/business/me", { auth: true }),
   updateMyBusiness: (data: Partial<BusinessConfig>) =>
     apiFetch<BusinessConfig>("/business/me", { auth: true, method: "PUT", body: JSON.stringify(data) }),
-  getPublicBusiness: (slug: string) => apiFetch<BusinessConfig>(\),
+  getPublicBusiness: (slug: string) => apiFetch<BusinessConfig>(`/business/public/${slug}`),
 };
 
 export const appointmentsApi = {
@@ -47,15 +47,15 @@ export const appointmentsApi = {
     const params = new URLSearchParams();
     if (startDate) params.set("startDate", startDate);
     if (endDate) params.set("endDate", endDate);
-    const q = params.toString() ? \ : "";
-    return apiFetch<Appointment[]>(\, { auth: true });
+    const q = params.toString() ? `?${params.toString()}` : "";
+    return apiFetch<Appointment[]>(`/appointments${q}`, { auth: true });
   },
   createAppointment: (slug: string, data: CreateAppointmentData) =>
-    apiFetch<Appointment>(\, { method: "POST", body: JSON.stringify(data) }),
+    apiFetch<Appointment>(`/appointments/book/${slug}`, { method: "POST", body: JSON.stringify(data) }),
   deleteAppointment: (id: string) =>
-    apiFetch<void>(\, { auth: true, method: "DELETE" }),
+    apiFetch<void>(`/appointments/${id}`, { auth: true, method: "DELETE" }),
   getAvailability: (slug: string, date: string) =>
-    apiFetch<AvailabilityResponse>(\),
+    apiFetch<AvailabilityResponse>(`/appointments/availability/${slug}?date=${date}`),
 };
 
 export const billingApi = {
