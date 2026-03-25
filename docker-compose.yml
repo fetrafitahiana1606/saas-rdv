@@ -27,6 +27,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
+      NODE_ENV: production
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
       DATABASE_USER: saasrdv
@@ -42,10 +43,12 @@ services:
       STRIPE_BUSINESS_PRICE_ID: price_business_placeholder
       FRONTEND_URL: http://localhost:3000
       PORT: 3001
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
-    command: npm run start:dev
+    healthcheck:
+      test: ['CMD-SHELL', 'node -e "require(\"http\").get(\"http://localhost:3001/auth/me\", r => process.exit(r.statusCode === 401 ? 0 : 1))"']
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
   frontend:
     build:
@@ -55,14 +58,11 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     environment:
+      NODE_ENV: production
       NEXT_PUBLIC_API_URL: http://localhost:3001
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
-    command: npm run dev
 
 volumes:
   pgdata:

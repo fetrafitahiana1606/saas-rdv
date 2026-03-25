@@ -38,7 +38,7 @@ export default function BillingPage() {
           return (
             <div key={plan.id} className={cn(
               "bg-white rounded-2xl p-8 shadow-sm border-2 transition-all hover:shadow-lg relative",
-              plan.popular ? "border-indigo-500 md:scale-105" : "border-gray-100",
+              plan.popular ? "border-indigo-500 md:scale-105" : "border-gray-200",
               isCurrent && "ring-2 ring-green-500 ring-offset-2"
             )}>
               {plan.popular && (

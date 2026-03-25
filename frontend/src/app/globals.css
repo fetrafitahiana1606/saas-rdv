@@ -22,13 +22,24 @@ html { scroll-behavior: smooth; }
 /* Animated gradient background */
 .hero-gradient {
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 25%, #16213e 50%, #0f0f23 100%);
+  position: relative;
+}
+.hero-gradient::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, white);
+  pointer-events: none;
 }
 
 /* Glass morphism card */
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 /* Glow effect */
@@ -58,3 +69,14 @@ html { scroll-behavior: smooth; }
 .animate-pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
 
 .rdp { --rdp-accent-color: var(--primary); }
+
+/* Smooth section transitions */
+section + section {
+  position: relative;
+}
+
+/* Better scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }

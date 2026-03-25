@@ -220,7 +220,7 @@ export default function HomePage() {
           <div className="flex justify-center mb-8 animate-fade-in-up">
             <div className="glass-card rounded-full px-4 py-2 flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-indigo-400" />
-              <span className="text-sm text-gray-300">Nouveau : Plans Pro et Business disponibles</span>
+              <span className="text-sm text-gray-200">Nouveau : Plans Pro et Business disponibles</span>
             </div>
           </div>
 
@@ -232,7 +232,7 @@ export default function HomePage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-400 text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
+          <p className="text-lg md:text-xl text-gray-300 text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
             L&apos;outil tout-en-un pour gérer vos rendez-vous, automatiser vos réservations et
             développer votre activité. Gratuit pour commencer.
           </p>
@@ -253,7 +253,7 @@ export default function HomePage() {
                   <ArrowRight className="h-4 w-4 text-gray-500 group-hover:text-white transition-colors" />
                 </div>
                 <h3 className="text-white font-semibold text-lg mb-1">{demo.name}</h3>
-                <p className="text-gray-400 text-sm">{demo.role}</p>
+                <p className="text-gray-300 text-sm">{demo.role}</p>
                 {loadingDemo === demo.endpoint && (
                   <div className="mt-3 h-1 bg-white/10 rounded overflow-hidden">
                     <div className={`h-full bg-gradient-to-r ${demo.accent} animate-pulse w-full`} />
@@ -313,7 +313,7 @@ export default function HomePage() {
       </section>
 
       {/* ================= FONCTIONNALITES ================= */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
             Fonctionnalités
@@ -325,7 +325,7 @@ export default function HomePage() {
             {features.map((f) => (
               <div
                 key={f.title}
-                className="bg-white rounded-xl p-6 border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                className="bg-white rounded-xl p-6 border border-gray-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
               >
                 <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
                   <f.icon className="h-6 w-6 text-indigo-600" />
@@ -416,7 +416,7 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Prêt à simplifier vos réservations ?
           </h2>
-          <p className="text-gray-400 mb-10 text-lg">
+          <p className="text-gray-300 mb-10 text-lg">
             Rejoignez des centaines de professionnels qui gagnent du temps chaque jour.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -435,9 +435,9 @@ export default function HomePage() {
       </section>
 
       {/* ================= FOOTER ================= */}
-      <footer className="bg-gray-900 py-8">
+      <footer className="bg-gray-900 py-10 border-t border-gray-800">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-400 text-sm">
             &copy; {new Date().getFullYear()} SaaS RDV. Tous droits réservés.
           </p>
         </div>

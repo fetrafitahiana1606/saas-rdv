@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
                   isActive
                     ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
-                    : "text-gray-400 hover:bg-white/5 hover:text-white"
+                    : "text-gray-300 hover:bg-white/5 hover:text-white"
                 )}
               >
                 <item.icon className="h-5 w-5" />
@@ -118,7 +118,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </span>
             </div>
           </div>
-          <button onClick={logout} className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors w-full">
+          <button onClick={logout} className="flex items-center gap-2 text-sm text-gray-400 hover:text-red-400 transition-colors w-full">
             <LogOut className="h-4 w-4" /> Déconnexion
           </button>
         </div>

@@ -79,7 +79,7 @@ export default function ConfigPage() {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Informations</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <Input label="Nom du business" {...register("businessName")} placeholder="Mon entreprise" />
@@ -87,7 +87,7 @@ export default function ConfigPage() {
           </div>
         </section>
 
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Couleur principale</h2>
           <Controller name="primaryColor" control={control} render={({ field }) => (
             <div className="flex gap-3">{COLORS.map((c) => (
@@ -98,7 +98,7 @@ export default function ConfigPage() {
           )} />
         </section>
 
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Lien de réservation</h2>
           <Input label="Slug" {...register("slug")} placeholder="mon-entreprise" />
           <div className="mt-3 flex items-center gap-2">
@@ -117,7 +117,7 @@ export default function ConfigPage() {
           {copied && <p className="text-xs text-green-600 mt-1">Lien copié !</p>}
         </section>
 
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Durée des créneaux</h2>
           <select {...register("slotDuration", { valueAsNumber: true })}
             className="rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
@@ -125,7 +125,7 @@ export default function ConfigPage() {
           </select>
         </section>
 
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Horaires</h2>
           <div className="space-y-3">{DAYS.map((day) => (
             <Controller key={day.key} name={`hours.${day.key}`} control={control} render={({ field }) => (
@@ -145,7 +145,7 @@ export default function ConfigPage() {
           ))}</div>
         </section>
 
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">Champs du formulaire client</h2>
           <p className="text-sm text-gray-500 mb-4">Le nom est toujours requis.</p>
           <div className="flex gap-6">{(["email", "phone", "note"] as const).map((f) => (

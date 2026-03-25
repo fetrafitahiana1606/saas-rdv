@@ -40,19 +40,19 @@ export default function AgendaPage() {
     <div>
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center"><Users className="h-5 w-5 text-indigo-600" /></div>
             <div><p className="text-2xl font-bold text-gray-900">{appointments.length}</p><p className="text-xs text-gray-500">Total RDV</p></div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center"><CalendarDays className="h-5 w-5 text-green-600" /></div>
             <div><p className="text-2xl font-bold text-gray-900">{todayCount}</p><p className="text-xs text-gray-500">Aujourd&apos;hui</p></div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center"><Clock className="h-5 w-5 text-purple-600" /></div>
             <div><p className="text-2xl font-bold text-gray-900">{weekCount}</p><p className="text-xs text-gray-500">Cette semaine</p></div>
@@ -61,13 +61,13 @@ export default function AgendaPage() {
       </div>
 
       {appointments.length === 0 ? (
-        <div className="bg-white rounded-2xl p-16 shadow-sm border border-gray-100 text-center">
+        <div className="bg-white rounded-2xl p-16 shadow-sm border border-gray-200 text-center">
           <CalendarDays className="h-16 w-16 text-gray-300 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucun rendez-vous</h3>
           <p className="text-gray-500 text-sm">Partagez votre lien de réservation pour recevoir vos premiers rendez-vous.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50/50">
