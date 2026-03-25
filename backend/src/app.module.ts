@@ -20,7 +20,7 @@ import { Appointment } from "./entities/appointment.entity.js";
       password: process.env.DATABASE_PASSWORD || "saasrdv_dev",
       database: process.env.DATABASE_NAME || "saasrdv",
       entities: [User, Business, Appointment],
-      synchronize: true,
+      synchronize: process.env.NODE_ENV !== "production",
     }),
     AuthModule,
     BusinessModule,

@@ -28,7 +28,7 @@ export class Business {
   @Column({
     type: "jsonb",
     default: () =>
-      `'{"monday":{"start":"09:00","end":"17:00","enabled":true},"tuesday":{"start":"09:00","end":"17:00","enabled":true},"wednesday":{"start":"09:00","end":"17:00","enabled":true},"thursday":{"start":"09:00","end":"17:00","enabled":true},"friday":{"start":"09:00","end":"17:00","enabled":true},"saturday":{"start":"09:00","end":"12:00","enabled":false},"sunday":{"start":"09:00","end":"12:00","enabled":false}}'`,
+      `'{"lundi":{"start":"09:00","end":"17:00","enabled":true},"mardi":{"start":"09:00","end":"17:00","enabled":true},"mercredi":{"start":"09:00","end":"17:00","enabled":true},"jeudi":{"start":"09:00","end":"17:00","enabled":true},"vendredi":{"start":"09:00","end":"17:00","enabled":true},"samedi":{"start":"09:00","end":"12:00","enabled":false},"dimanche":{"start":"09:00","end":"12:00","enabled":false}}'`,
   })
   hours: Record<string, { start: string; end: string; enabled: boolean }>;
 

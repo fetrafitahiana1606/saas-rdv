@@ -60,7 +60,7 @@ export class AuthController {
   @Post("demo-login")
   async demoLogin() {
     return { token: (await this.findOrCreateDemo("demo@saasrdv.test", "Dr. Marie Dupont", UserPlan.FREE, {
-      businessName: "Cabinet Dr. Dupont", serviceType: "Consultation m\u00e9dicale", primaryColor: "#8b5cf6", slug: "demo-cabinet", slotDuration: 30,
+      businessName: "Cabinet Dr. Dupont", serviceType: "Consultation médicale", primaryColor: "#8b5cf6", slug: "demo-cabinet", slotDuration: 30,
       hours: { lundi:{start:"09:00",end:"18:00",enabled:true}, mardi:{start:"09:00",end:"18:00",enabled:true}, mercredi:{start:"09:00",end:"18:00",enabled:true}, jeudi:{start:"09:00",end:"18:00",enabled:true}, vendredi:{start:"09:00",end:"18:00",enabled:true}, samedi:{start:"09:00",end:"12:00",enabled:false}, dimanche:{start:"09:00",end:"12:00",enabled:false} },
       formFields: { phone: true, email: true, note: true },
     })).token };
@@ -69,7 +69,7 @@ export class AuthController {
   @Post("demo-login-pro")
   async demoLoginPro() {
     return { token: (await this.findOrCreateDemo("demo-pro@saasrdv.test", "Salon Belle & Zen", UserPlan.PRO, {
-      businessName: "Salon Belle & Zen", serviceType: "Coiffure & Bien-\u00eatre", primaryColor: "#ec4899", slug: "demo-salon", slotDuration: 45,
+      businessName: "Salon Belle & Zen", serviceType: "Coiffure & Bien-être", primaryColor: "#ec4899", slug: "demo-salon", slotDuration: 45,
       hours: { lundi:{start:"10:00",end:"19:00",enabled:true}, mardi:{start:"10:00",end:"19:00",enabled:true}, mercredi:{start:"10:00",end:"19:00",enabled:true}, jeudi:{start:"10:00",end:"19:00",enabled:true}, vendredi:{start:"10:00",end:"19:00",enabled:true}, samedi:{start:"10:00",end:"19:00",enabled:true}, dimanche:{start:"10:00",end:"19:00",enabled:false} },
       formFields: { phone: true, email: true, note: true },
     })).token };
@@ -78,7 +78,7 @@ export class AuthController {
   @Post("demo-login-business")
   async demoLoginBusiness() {
     return { token: (await this.findOrCreateDemo("demo-biz@saasrdv.test", "Agence ImmoPlus", UserPlan.BUSINESS, {
-      businessName: "Agence ImmoPlus", serviceType: "Visite immobili\u00e8re", primaryColor: "#f97316", slug: "demo-immo", slotDuration: 60,
+      businessName: "Agence ImmoPlus", serviceType: "Visite immobilière", primaryColor: "#f97316", slug: "demo-immo", slotDuration: 60,
       hours: { lundi:{start:"09:00",end:"19:00",enabled:true}, mardi:{start:"09:00",end:"19:00",enabled:true}, mercredi:{start:"09:00",end:"19:00",enabled:true}, jeudi:{start:"09:00",end:"19:00",enabled:true}, vendredi:{start:"09:00",end:"19:00",enabled:true}, samedi:{start:"10:00",end:"16:00",enabled:true}, dimanche:{start:"10:00",end:"16:00",enabled:false} },
       formFields: { phone: true, email: true, note: true },
     })).token };

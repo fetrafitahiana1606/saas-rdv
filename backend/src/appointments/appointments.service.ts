@@ -122,8 +122,15 @@ export class AppointmentsService {
       where: { businessId: business.id, date },
     });
 
-    // Filter out booked slots
+    // Filter out booked slots and past slots for today
+    const now = new Date();
+    const todayStr = now.toISOString().split("T")[0];
+    const currentTime = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+
     return allSlots.filter((slot) => {
+      // Skip past slots for today
+      if (date === todayStr && slot.startTime <= currentTime) return false;
+      // Skip booked slots
       return !existing.some(
         (appt) => slot.startTime < appt.endTime && slot.endTime > appt.startTime,
       );
@@ -139,8 +146,8 @@ export class AppointmentsService {
   }
 
   private getDayName(dateStr: string): string {
-    const date = new Date(dateStr + "T00:00:00");
-    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    const date = new Date(dateStr + "T12:00:00");
+    const days = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
     return days[date.getDay()];
   }
 }
