@@ -284,7 +284,7 @@ export default function HomePage() {
           <div className="text-center animate-fade-in-up">
             <p className="text-gray-500 text-sm mb-3">ou connectez-vous avec votre compte</p>
             <Button
-              variant="outline"
+              variant="ghost"
               size="lg"
               onClick={() => {
                 window.location.href = authApi.getGoogleLoginUrl();
