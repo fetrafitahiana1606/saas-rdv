@@ -27,7 +27,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
       DATABASE_USER: saasrdv
