@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import { TeamMember } from "../entities/team-member.entity.js";
 import { User } from "../entities/user.entity.js";
 import { Business } from "../entities/business.entity.js";
-import { ActivityLog, ActivityAction } from "../entities/activity-log.entity.js";
+import { ActivityLog } from "../entities/activity-log.entity.js";
 import { InviteTeamMemberDto } from "./dto/invite-team-member.dto.js";
 import { TeamRole } from "../entities/team-member.entity.js";
 
@@ -58,7 +58,7 @@ export class TeamService {
     });
     const saved = await this.teamMemberRepo.save(member);
 
-    await this.logActivity(business.id, userId, ActivityAction.MEMBER_INVITED, "member", saved.id, {
+    await this.logActivity(business.id, userId, "MEMBER_INVITED", "member", saved.id, {
       email: dto.email,
       role: dto.role,
     });
@@ -79,7 +79,7 @@ export class TeamService {
     member.role = role;
     const saved = await this.teamMemberRepo.save(member);
 
-    await this.logActivity(business.id, userId, ActivityAction.CONFIG_UPDATED, "member", memberId, {
+    await this.logActivity(business.id, userId, "CONFIG_UPDATED", "member", memberId, {
       newRole: role,
     });
 
@@ -100,7 +100,7 @@ export class TeamService {
     const memberEmail = member.user?.email;
     await this.teamMemberRepo.remove(member);
 
-    await this.logActivity(business.id, userId, ActivityAction.MEMBER_REMOVED, "member", memberId, {
+    await this.logActivity(business.id, userId, "MEMBER_REMOVED", "member", memberId, {
       email: memberEmail,
     });
   }
@@ -109,7 +109,6 @@ export class TeamService {
     const business = await this.getBusinessByOwner(userId);
     return this.activityLogRepo.find({
       where: { businessId: business.id },
-      relations: ["user"],
       order: { createdAt: "DESC" },
       take: limit,
     });
@@ -118,7 +117,7 @@ export class TeamService {
   private async logActivity(
     businessId: string,
     userId: string,
-    action: ActivityAction,
+    action: string,
     targetType: string,
     targetId: string | null,
     metadata: Record<string, any> | null = null,
