@@ -127,9 +127,9 @@ export class TeamService {
       userId,
       action,
       targetType,
-      targetId,
-      metadata,
-    });
-    await this.activityLogRepo.save(log);
+      targetId: targetId || undefined,
+      metadata: metadata || undefined,
+    } as Partial<ActivityLog>);
+    await this.activityLogRepo.save(log as ActivityLog);
   }
 }
