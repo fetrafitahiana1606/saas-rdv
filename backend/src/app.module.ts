@@ -5,9 +5,11 @@ import { AuthModule } from "./auth/auth.module.js";
 import { BusinessModule } from "./business/business.module.js";
 import { AppointmentsModule } from "./appointments/appointments.module.js";
 import { BillingModule } from "./billing/billing.module.js";
+import { WidgetModule } from "./widget/widget.module.js";
 import { User } from "./entities/user.entity.js";
 import { Business } from "./entities/business.entity.js";
 import { Appointment } from "./entities/appointment.entity.js";
+import { ActivityLog } from "./entities/activity-log.entity.js";
 
 @Module({
   imports: [
@@ -19,13 +21,14 @@ import { Appointment } from "./entities/appointment.entity.js";
       username: process.env.DATABASE_USER || "saasrdv",
       password: process.env.DATABASE_PASSWORD || "saasrdv_dev",
       database: process.env.DATABASE_NAME || "saasrdv",
-      entities: [User, Business, Appointment],
+      entities: [User, Business, Appointment, ActivityLog],
       synchronize: process.env.NODE_ENV !== "production",
     }),
     AuthModule,
     BusinessModule,
     AppointmentsModule,
     BillingModule,
+    WidgetModule,
   ],
 })
 export class AppModule {}

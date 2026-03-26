@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/auth-context";
 import { Spinner } from "@/components/ui/spinner";
-import { Settings, Calendar, CreditCard, LogOut, Menu, X, ExternalLink } from "lucide-react";
+import { Settings, Calendar, CreditCard, Code2, Users, Activity, LogOut, Menu, X, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { businessApi } from "@/lib/api";
 
@@ -13,11 +13,15 @@ const navItems = [
   { href: "/dashboard/config", label: "Configuration", icon: Settings },
   { href: "/dashboard/agenda", label: "Agenda", icon: Calendar },
   { href: "/dashboard/billing", label: "Facturation", icon: CreditCard },
+  { href: "/dashboard/widget", label: "Widget", icon: Code2 },
+  { href: "/dashboard/team", label: "Équipe", icon: Users },
+  { href: "/dashboard/activity", label: "Activité", icon: Activity },
 ];
 
 const planBadge: Record<string, { label: string; color: string }> = {
   free: { label: "Free", color: "bg-gray-600" },
   pro: { label: "Pro", color: "bg-indigo-600" },
+  team: { label: "Équipe", color: "bg-purple-600" },
   business: { label: "Business", color: "bg-orange-500" },
 };
 
@@ -46,6 +50,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     "/dashboard/config": "Configuration",
     "/dashboard/agenda": "Agenda",
     "/dashboard/billing": "Facturation",
+    "/dashboard/widget": "Widget",
+    "/dashboard/team": "Équipe",
+    "/dashboard/activity": "Activité",
   };
 
   return (

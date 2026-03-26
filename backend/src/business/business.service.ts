@@ -2,12 +2,14 @@ import { Injectable, NotFoundException, ConflictException } from "@nestjs/common
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Business } from "../entities/business.entity.js";
+import { ActivityLog } from "../entities/activity-log.entity.js";
 import { UpdateBusinessDto } from "./dto/update-business.dto.js";
 
 @Injectable()
 export class BusinessService {
   constructor(
     @InjectRepository(Business) private businessRepo: Repository<Business>,
+    @InjectRepository(ActivityLog) private activityLogRepo: Repository<ActivityLog>,
   ) {}
 
   async getByUserId(userId: string): Promise<Business> {
@@ -36,7 +38,21 @@ export class BusinessService {
       }
     }
 
+    const changedFields = Object.keys(dto);
     Object.assign(business, dto);
-    return this.businessRepo.save(business);
+    const saved = await this.businessRepo.save(business);
+
+    // Log activity
+    const log = this.activityLogRepo.create({
+      businessId: business.id,
+      userId,
+      action: "CONFIG_UPDATED",
+      targetType: "business",
+      targetId: business.id,
+      metadata: { changedFields },
+    });
+    await this.activityLogRepo.save(log);
+
+    return saved;
   }
 }

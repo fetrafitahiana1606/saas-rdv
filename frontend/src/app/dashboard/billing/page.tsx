@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 import { Check, Sparkles } from "lucide-react";
 
 const plans = [
-  { id: "free" as const, name: "Free", price: "0", features: ["1 page de réservation", "50 RDV/mois", "Personnalisation basique"], popular: false },
-  { id: "pro" as const, name: "Pro", price: "19", features: ["Pages illimitées", "RDV illimités", "Couleurs personnalisées", "Support prioritaire", "Statistiques avancées"], popular: true },
-  { id: "business" as const, name: "Business", price: "49", features: ["Tout le plan Pro", "Multi-utilisateurs", "API & Webhooks", "Marque blanche", "Support dédié"], popular: false },
+  { id: "free" as const, name: "Free", price: "0", desc: "Pour démarrer gratuitement", features: ["1 page de réservation", "50 RDV/mois", "Personnalisation basique", "Notifications email"], popular: false },
+  { id: "pro" as const, name: "Pro", price: "19", desc: "Pour les professionnels actifs", features: ["Pages illimitées", "RDV illimités", "Couleurs personnalisées", "Support prioritaire", "Statistiques avancées"], popular: false },
+  { id: "team" as const, name: "Équipe", price: "39", desc: "Pour les cabinets et équipes", features: ["Tout le plan Pro", "Multi-utilisateurs (5 membres)", "Rôles & permissions", "Journal d'activité", "Agenda multi-praticiens", "Widget intégrable"], popular: true },
+  { id: "business" as const, name: "Business", price: "79", desc: "Pour les entreprises", features: ["Tout le plan Équipe", "Utilisateurs illimités", "API & Webhooks", "Marque blanche", "Support dédié", "Rappels SMS"], popular: false },
 ];
 
 export default function BillingPage() {
@@ -32,7 +33,7 @@ export default function BillingPage() {
     <div>
       <p className="text-gray-600 mb-8">Plan actuel : <span className="inline-flex items-center gap-1 font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg text-sm capitalize">{user?.plan || "free"}</span></p>
 
-      <div className="grid md:grid-cols-3 gap-6 mb-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {plans.map((plan) => {
           const isCurrent = user?.plan === plan.id;
           return (

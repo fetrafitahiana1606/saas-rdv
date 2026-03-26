@@ -123,6 +123,7 @@ export class BillingService {
     const prices: Record<string, string | undefined> = {
       pro: this.configService.get<string>("STRIPE_PRICE_PRO"),
       business: this.configService.get<string>("STRIPE_PRICE_BUSINESS"),
+      team: this.configService.get<string>("STRIPE_PRICE_TEAM"),
     };
     return prices[plan] || null;
   }

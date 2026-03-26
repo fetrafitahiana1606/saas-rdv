@@ -163,18 +163,35 @@ const plans = [
     ],
     accent: "border-indigo-500",
     buttonStyle: "bg-indigo-600 hover:bg-indigo-700 text-white",
+    popular: false,
+  },
+  {
+    name: "Équipe",
+    price: "39",
+    desc: "Pour les cabinets et équipes",
+    features: [
+      "Tout le plan Pro",
+      "Multi-utilisateurs (5 membres)",
+      "Rôles & permissions",
+      "Journal d'activité",
+      "Agenda multi-praticiens",
+      "Widget intégrable",
+    ],
+    accent: "border-purple-500",
+    buttonStyle: "bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 text-white",
     popular: true,
   },
   {
     name: "Business",
-    price: "49",
-    desc: "Pour les équipes et agences",
+    price: "79",
+    desc: "Pour les entreprises",
     features: [
-      "Tout le plan Pro",
-      "Multi-utilisateurs",
+      "Tout le plan Équipe",
+      "Utilisateurs illimités",
       "API & Webhooks",
       "Marque blanche",
       "Support dédié",
+      "Rappels SMS",
     ],
     accent: "border-amber-500",
     buttonStyle: "bg-gray-900 hover:bg-gray-800 text-white",
@@ -373,7 +390,7 @@ export default function HomePage() {
           <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
             Commencez gratuitement, évoluez selon vos besoins. Sans engagement.
           </p>
-          <div className="grid md:grid-cols-3 gap-6 items-start">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
             {plans.map((plan) => (
               <div
                 key={plan.name}

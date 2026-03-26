@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository, Between, LessThanOrEqual, MoreThanOrEqual } from "typeorm";
 import { Appointment } from "../entities/appointment.entity.js";
 import { Business } from "../entities/business.entity.js";
+import { ActivityLog } from "../entities/activity-log.entity.js";
 import { BookAppointmentDto } from "./dto/book-appointment.dto.js";
 
 @Injectable()
@@ -10,7 +11,27 @@ export class AppointmentsService {
   constructor(
     @InjectRepository(Appointment) private appointmentRepo: Repository<Appointment>,
     @InjectRepository(Business) private businessRepo: Repository<Business>,
+    @InjectRepository(ActivityLog) private activityLogRepo: Repository<ActivityLog>,
   ) {}
+
+  async logActivity(
+    businessId: string,
+    userId: string | null,
+    action: string,
+    targetType: string,
+    targetId: string,
+    metadata?: Record<string, unknown>,
+  ): Promise<void> {
+    const log = this.activityLogRepo.create({
+      businessId,
+      userId: userId || undefined,
+      action,
+      targetType,
+      targetId,
+      metadata: metadata || {},
+    });
+    await this.activityLogRepo.save(log);
+  }
 
   async getAppointments(userId: string, startDate?: string, endDate?: string): Promise<Appointment[]> {
     const business = await this.businessRepo.findOne({ where: { userId } });
@@ -76,7 +97,19 @@ export class AppointmentsService {
       endTime,
     });
 
-    return this.appointmentRepo.save(appointment);
+    const saved = await this.appointmentRepo.save(appointment);
+
+    // Log activity
+    await this.logActivity(
+      business.id,
+      null,
+      "BOOKING_RECEIVED",
+      "appointment",
+      saved.id,
+      { clientName: dto.clientName, clientEmail: dto.clientEmail, date: dto.date, startTime: dto.startTime },
+    );
+
+    return saved;
   }
 
   async deleteAppointment(id: string, userId: string): Promise<void> {
@@ -93,6 +126,16 @@ export class AppointmentsService {
     }
 
     await this.appointmentRepo.remove(appointment);
+
+    // Log activity
+    await this.logActivity(
+      business.id,
+      userId,
+      "APPOINTMENT_DELETED",
+      "appointment",
+      id,
+      { clientName: appointment.clientName, date: appointment.date, startTime: appointment.startTime },
+    );
   }
 
   async getAvailability(slug: string, date: string): Promise<{ startTime: string; endTime: string }[]> {

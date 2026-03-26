@@ -63,9 +63,39 @@ export const billingApi = {
   createPortal: () => apiFetch<{ url: string }>("/billing/portal", { auth: true, method: "POST" }),
 };
 
-export interface User { id: string; email: string; name: string; avatar?: string; plan: "free" | "pro" | "business"; createdAt: string; }
+export interface User { id: string; email: string; name: string; avatar?: string; plan: "free" | "pro" | "team" | "business"; createdAt: string; }
 export interface BusinessHours { [day: string]: { start: string; end: string; enabled: boolean }; }
 export interface BusinessConfig { id?: string; businessName: string; serviceType: string; primaryColor: string; slug: string; hours: BusinessHours; days: string[]; slotDuration: number; formFields: { email: boolean; phone: boolean; note: boolean; }; }
 export interface Appointment { id: string; clientName: string; clientEmail?: string; clientPhone?: string; note?: string; date: string; startTime: string; endTime?: string; businessId?: string; createdAt?: string; }
 export interface CreateAppointmentData { clientName: string; clientEmail?: string; clientPhone?: string; note?: string; date: string; startTime: string; }
 export interface AvailabilityResponse { slots: string[]; business: BusinessConfig; }
+
+export const teamApi = {
+  getMembers: () => apiFetch<TeamMember[]>("/team", { auth: true }),
+  inviteMember: (data: { email: string; name: string; role: string }) =>
+    apiFetch<TeamMember>("/team/invite", { auth: true, method: "POST", body: JSON.stringify(data) }),
+  updateRole: (memberId: string, role: string) =>
+    apiFetch<TeamMember>(`/team/${memberId}/role`, { auth: true, method: "PUT", body: JSON.stringify({ role }) }),
+  removeMember: (memberId: string) =>
+    apiFetch<void>(`/team/${memberId}`, { auth: true, method: "DELETE" }),
+  getActivity: (limit = 50) =>
+    apiFetch<ActivityLogEntry[]>(`/team/activity?limit=${limit}`, { auth: true }),
+};
+
+export interface TeamMember {
+  id: string;
+  userId: string;
+  role: "admin" | "secretary" | "readonly";
+  user: { id: string; name: string; email: string; avatar?: string };
+  createdAt: string;
+}
+
+export interface ActivityLogEntry {
+  id: string;
+  action: string;
+  targetType: string;
+  targetId?: string;
+  metadata?: Record<string, unknown>;
+  createdAt: string;
+  user: { name: string; avatar?: string };
+}

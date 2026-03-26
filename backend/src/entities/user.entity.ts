@@ -4,6 +4,7 @@ export enum UserPlan {
   FREE = "free",
   PRO = "pro",
   BUSINESS = "business",
+  TEAM = "team",
 }
 
 @Entity("users")
